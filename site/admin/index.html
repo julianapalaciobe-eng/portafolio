@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Ink District</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&family=Oswald:wght@500;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #9b0933; --crimson-hi: #c8124a; --wine: #59051d; --wine-deep: #310310; --ink: #0b0003;
+    --paper: #f3f1ef; --line: #e2dcd9; --text: #1b1013; --muted: #6b5a5f; --ok: #1f7a4a; --white: #fff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--text); font: 400 15px/1.5 "Inter", system-ui, sans-serif; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  .script { font-family: "Pinyon Script", cursive; font-weight: 400; }
+  h1, h2, h3 { margin: 0; font-weight: 400; }
+
+  /* barra superior */
+  .bar {
+    position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; padding: 12px 24px;
+    background: var(--ink); color: var(--white);
+  }
+  .bar__logo { width: 84px; aspect-ratio: 425/193; background: var(--white); -webkit-mask: url("../assets/img/logo-inkdistrict.png") center/contain no-repeat; mask: url("../assets/img/logo-inkdistrict.png") center/contain no-repeat; }
+  .bar h1 { font: 500 13px/1 "Oswald", sans-serif; letter-spacing: .18em; text-transform: uppercase; opacity: .8; }
+  .bar__status { margin-left: auto; font-size: 13px; opacity: .85; }
+  .bar__status.is-dirty { color: #ffb3c8; opacity: 1; }
+  .bar__status.is-ok { color: #9be3bd; opacity: 1; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 16px; border-radius: 999px;
+    border: 1.5px solid var(--crimson); background: var(--crimson); color: var(--white); cursor: pointer; text-decoration: none;
+    font: 700 12px/1 "Oswald", sans-serif; letter-spacing: .1em; text-transform: uppercase; transition: background .15s, opacity .15s;
+  }
+  .btn:hover { background: var(--crimson-hi); border-color: var(--crimson-hi); }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .btn--ghost { background: transparent; color: var(--crimson); }
+  .btn--ghost:hover { background: rgba(155,9,51,.08); color: var(--crimson); }
+  .bar .btn--ghost { color: var(--white); border-color: rgba(255,255,255,.4); }
+  .bar .btn--ghost:hover { background: rgba(255,255,255,.1); }
+  .btn--danger { background: transparent; color: #a1122f; border-color: #e7b7c3; }
+  .btn--danger:hover { background: #fbe9ee; color: #a1122f; border-color: #a1122f; }
+  .icon {
+    width: 32px; height: 32px; display: inline-grid; place-items: center; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--white); cursor: pointer; font-size: 15px; line-height: 1; color: var(--text);
+  }
+  .icon:hover { border-color: var(--crimson); color: var(--crimson); }
+  .icon:disabled { opacity: .3; cursor: default; }
+  .icon--danger:hover { background: #fbe9ee; }
+
+  /* estructura */
+  .layout { display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - 60px); }
+  .side { border-right: 1px solid var(--line); background: var(--white); padding: 20px 14px; position: sticky; top: 60px; height: calc(100vh - 60px); overflow: auto; }
+  .side h2 { font: 700 11px/1 "Oswald", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 6px 8px 12px; }
+  .nav { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 4px; }
+  .nav__item { display: flex; align-items: center; gap: 4px; border-radius: 10px; }
+  .nav__item > button:first-child {
+    flex: 1; display: flex; align-items: center; gap: 10px; text-align: left; padding: 9px 10px; border: 0; border-radius: 10px; background: none; cursor: pointer;
+  }
+  .nav__item > button:first-child b { font: 400 20px/1 "Anton", sans-serif; color: var(--crimson); width: 28px; }
+  .nav__item > button:first-child small { display: block; font-size: 11px; color: var(--muted); }
+  .nav__item:hover { background: var(--paper); }
+  .nav__item.is-on { background: #fbe9ee; }
+  .nav__item .icon { width: 26px; height: 26px; font-size: 12px; opacity: 0; }
+  .nav__item:hover .icon, .nav__item.is-on .icon { opacity: 1; }
+  .side .btn { width: 100%; }
+  .side__sep { height: 1px; background: var(--line); margin: 16px 6px; }
+
+  .main { padding: 28px clamp(16px, 4vw, 48px) 120px; max-width: 1100px; }
+  .head { display: flex; align-items: end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .head h2 { font: 400 clamp(40px, 5vw, 64px)/1 "Anton", sans-serif; text-transform: uppercase; color: var(--crimson); }
+  .head p { margin: 4px 0 0; color: var(--muted); }
+
+  .panel { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 20px; }
+  .panel > h3 { font-size: 34px; color: var(--crimson); line-height: 1.1; margin-bottom: 12px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+  .grid .full { grid-column: 1 / -1; }
+  label.f { display: grid; gap: 6px; font: 600 12px/1.2 "Inter", sans-serif; color: var(--muted); }
+  label.f span.hint { font-weight: 400; font-size: 12px; }
+  input[type=text], input[type=url], select, textarea {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--white); color: var(--text); font-weight: 400;
+  }
+  textarea { min-height: 84px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--crimson); box-shadow: 0 0 0 3px rgba(155,9,51,.12); }
+
+  /* piezas */
+  .pieces { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+  .pc { position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--white); display: flex; flex-direction: column; }
+  .pc__thumb { aspect-ratio: 4/3; background: repeating-conic-gradient(#eee 0 25%, #fafafa 0 50%) 0 0/16px 16px; display: grid; place-items: center; cursor: pointer; }
+  .pc__thumb { position: relative; overflow: hidden; }
+  .pc__thumb img, .pc__thumb video { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; }
+  .pc__thumb .empty { font-size: 12px; color: var(--muted); }
+  .pc__n { position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 999px; background: var(--crimson); color: var(--white); font: 700 11px/1 "Oswald", sans-serif; letter-spacing: .08em; }
+  .pc__body { padding: 10px 12px 4px; flex: 1; }
+  .pc__body strong { display: block; font-size: 14px; line-height: 1.3; }
+  .pc__body small { color: var(--muted); font-size: 12px; }
+  .pc__tools { display: flex; gap: 4px; padding: 8px 10px 10px; }
+  .pc__tools .icon:last-child { margin-left: auto; }
+  .add {
+    border: 2px dashed #d7c3c9; border-radius: 12px; background: transparent; color: var(--crimson); cursor: pointer; min-height: 220px;
+    display: grid; place-items: center; align-content: center; gap: 6px; font: 700 12px/1 "Oswald", sans-serif; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .add b { font: 400 40px/1 "Anton", sans-serif; }
+  .add:hover { background: #fbe9ee; border-color: var(--crimson); }
+
+  /* imágenes dentro del editor */
+  .media-list { display: flex; flex-wrap: wrap; gap: 10px; }
+  .mi { position: relative; width: 120px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--white); }
+  .mi img, .mi video { width: 100%; height: 90px; object-fit: contain; display: block; background: repeating-conic-gradient(#eee 0 25%, #fafafa 0 50%) 0 0/12px 12px; }
+  .mi__tools { display: flex; justify-content: space-between; padding: 4px; }
+  .mi__tools .icon { width: 26px; height: 26px; font-size: 12px; }
+  .mi__badge { position: absolute; top: 4px; left: 4px; background: var(--ink); color: var(--white); font-size: 10px; padding: 2px 6px; border-radius: 6px; }
+  .drop {
+    width: 120px; min-height: 124px; border: 2px dashed #d7c3c9; border-radius: 10px; display: grid; place-items: center; text-align: center;
+    color: var(--crimson); cursor: pointer; font-size: 12px; padding: 8px; background: transparent;
+  }
+  .drop:hover, .drop.is-over { background: #fbe9ee; border-color: var(--crimson); }
+  .progressbar { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin-top: 8px; display: none; }
+  .progressbar.is-on { display: block; }
+  .progressbar i { display: block; height: 100%; width: 0; background: var(--crimson); transition: width .2s; }
+
+  dialog { width: min(760px, calc(100vw - 32px)); border: 0; border-radius: 16px; padding: 0; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+  dialog::backdrop { background: rgba(11,0,3,.55); }
+  .dlg__head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: var(--ink); color: var(--white); }
+  .dlg__head h3 { font-size: 34px; line-height: 1.1; }
+  .dlg__body { padding: 20px; max-height: calc(100vh - 200px); overflow: auto; }
+  .dlg__foot { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); }
+  .dlg__head .icon { background: transparent; color: var(--white); border-color: rgba(255,255,255,.3); }
+
+  .help { margin: 0 0 14px; padding: 12px 14px; border-radius: 10px; background: #fbf3f5; border-left: 3px solid var(--crimson); font-size: 13px; color: var(--muted); }
+  .logos { display: grid; gap: 8px; }
+  .logo-row { display: grid; grid-template-columns: 90px 1fr auto auto auto auto; gap: 8px; align-items: center; }
+  .logo-row .thumb { height: 50px; border-radius: 8px; background: var(--ink); display: grid; place-items: center; padding: 6px; }
+  .logo-row .thumb img { max-height: 100%; max-width: 100%; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--ink); color: var(--white); padding: 12px 18px; border-radius: 12px; transition: transform .3s; z-index: 50; }
+  .toast.is-on { transform: translateX(-50%); }
+  .toast.is-error { background: #a1122f; }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .side { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+    .grid { grid-template-columns: 1fr; }
+    .bar h1 { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <span class="bar__logo" aria-hidden="true"></span>
+  <h1>Panel del portafolio</h1>
+  <span class="bar__status" id="status" role="status">Cargando…</span>
+  <a class="btn btn--ghost" href="../" target="_blank" rel="noopener">Ver portafolio ↗</a>
+  <button class="btn" id="saveBtn" disabled>Guardar cambios</button>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <h2>Secciones</h2>
+    <ul class="nav" id="nav"></ul>
+    <button class="btn btn--ghost" id="addSection">+ Nueva sección</button>
+    <div class="side__sep"></div>
+    <ul class="nav"><li class="nav__item" id="contactItem"><button><b>@</b><span>Contacto<small>Correo, WhatsApp, Instagram</small></span></button></li></ul>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <form method="dialog" id="dlgForm">
+    <div class="dlg__head"><h3 class="script" id="dlgTitle">Pieza</h3><button class="icon" value="cancel" aria-label="Cerrar">✕</button></div>
+    <div class="dlg__body" id="dlgBody"></div>
+    <div class="dlg__foot">
+      <button class="btn btn--ghost" value="cancel">Cancelar</button>
+      <button class="btn" value="ok" id="dlgOk">Listo</button>
+    </div>
+  </form>
+</dialog>
+
+<input type="file" id="filePicker" hidden multiple>
+<div class="toast" id="toast" role="alert"></div>
+
+<script>
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const esc = (v = "") => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const slug = (v = "") => String(v).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const pad = (n) => String(n).padStart(2, "0");
+  const src = (p) => (p && !/^https?:|^\//.test(p) ? "../" + p : p);
+  const isVideo = (p = "") => /\.(mp4|webm|mov)$/i.test(p);
+
+  const TIPOS = {
+    galeria: { nombre: "Galería", ayuda: "Piezas en parejas alternadas. Cada pieza puede ir normal, recortada, en recuadro o saliendo del borde. Ideal para ilustración y editorial." },
+    cuadricula: { nombre: "Cuadrícula", ayuda: "Tres columnas iguales. Ideal para afiches y piezas verticales." },
+    empaques: { nombre: "Proyectos con texto", ayuda: "Cada pieza es un proyecto con su texto al lado y 1 a 3 imágenes recortadas (PNG sin fondo se ve mejor)." },
+    fotos: { nombre: "Fotografía", ayuda: "Tira deslizante, filtros por serie y cuadrícula. Usa el estilo «Comparar» con 2 fotos para el deslizador de color." },
+    branding: { nombre: "Branding", ayuda: "Logofolio (logos blancos con fondo transparente) y proyectos de rebranding con su versión «antes»." },
+    audiovisual: { nombre: "Audiovisual", ayuda: "Las piezas con video van al reproductor; las que solo tienen imagen se muestran como fotogramas debajo." },
+    ropa: { nombre: "Colección (arcos)", ayuda: "Piezas en marcos de arco, con un lema grande arriba." },
+  };
+  const ESTILOS = {
+    normal: "Normal (rectángulo)",
+    recorte: "Recorte flotante (PNG sin fondo)",
+    recuadro: "Recuadro vino (el corte toca el borde de abajo)",
+    "recuadro-claro": "Recuadro claro",
+    "recuadro-carmesi": "Recuadro carmesí",
+    lateral: "Sale desde el borde de la pantalla",
+  };
+
+  let data = null, sel = 0, dirty = false;
+
+  /* ---------- estado y guardado ---------- */
+  const status = $("#status"), saveBtn = $("#saveBtn");
+  function setDirty(v = true) {
+    dirty = v; saveBtn.disabled = !v;
+    status.className = "bar__status " + (v ? "is-dirty" : "");
+    status.textContent = v ? "Cambios sin guardar" : "Todo guardado";
+  }
+  function toast(msg, error = false) {
+    const t = $("#toast"); t.textContent = msg; t.className = "toast is-on" + (error ? " is-error" : "");
+    clearTimeout(toast.t); toast.t = setTimeout(() => (t.className = "toast"), 3200);
+  }
+  async function save() {
+    saveBtn.disabled = true; status.textContent = "Guardando…";
+    try {
+      const r = await fetch("/api/content", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || r.status);
+      setDirty(false); status.className = "bar__status is-ok"; status.textContent = "Guardado ✓";
+      toast("Cambios guardados. Recarga el portafolio para verlos.");
+    } catch (e) { saveBtn.disabled = false; status.textContent = "No se pudo guardar"; toast("No se pudo guardar: " + e.message, true); }
+  }
+  saveBtn.addEventListener("click", save);
+  addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); if (dirty) save(); } });
+  addEventListener("beforeunload", (e) => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+  /* ---------- subir archivos ---------- */
+  function upload(file, onProgress) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/upload?name=" + encodeURIComponent(file.name));
+      xhr.upload.onprogress = (e) => e.lengthComputable && onProgress?.(e.loaded / e.total);
+      xhr.onload = () => { try { const j = JSON.parse(xhr.responseText); xhr.status === 200 ? resolve(j.path) : reject(new Error(j.error)); } catch { reject(new Error("Respuesta inválida")); } };
+      xhr.onerror = () => reject(new Error("Sin conexión con el servidor"));
+      xhr.send(file);
+    });
+  }
+  function pick({ accept = "image/*", multiple = true } = {}) {
+    return new Promise((resolve) => {
+      const fp = $("#filePicker"); fp.value = ""; fp.accept = accept; fp.multiple = multiple;
+      fp.onchange = () => resolve([...fp.files]); fp.click();
+    });
+  }
+  async function uploadMany(files, bar) {
+    const out = [];
+    for (let i = 0; i < files.length; i++) {
+      try { out.push(await upload(files[i], (p) => bar && (bar.firstElementChild.style.width = ((i + p) / files.length) * 100 + "%"))); }
+      catch (e) { toast(`${files[i].name}: ${e.message}`, true); }
+    }
+    return out;
+  }
+
+  /* ---------- barra lateral ---------- */
+  function renderNav() {
+    const secs = data.secciones;
+    $("#nav").innerHTML = secs.map((s, i) => `
+      <li class="nav__item ${i === sel ? "is-on" : ""}">
+        <button data-go="${i}"><b>${pad(i + 1)}</b><span>${esc(s.titulo || "Sin título")}<small>${esc(TIPOS[s.tipo]?.nombre || s.tipo)} · ${(s.piezas || []).length} piezas</small></span></button>
+        <button class="icon" data-move="${i}" data-dir="-1" aria-label="Subir sección" ${i === 0 ? "disabled" : ""}>↑</button>
+        <button class="icon" data-move="${i}" data-dir="1" aria-label="Bajar sección" ${i === secs.length - 1 ? "disabled" : ""}>↓</button>
+      </li>`).join("");
+    $("#contactItem").classList.toggle("is-on", sel === "contacto");
+  }
+  $("#nav").addEventListener("click", (e) => {
+    const go = e.target.closest("[data-go]"), mv = e.target.closest("[data-move]");
+    if (mv) {
+      const i = +mv.dataset.move, j = i + +mv.dataset.dir, s = data.secciones;
+      [s[i], s[j]] = [s[j], s[i]]; if (sel === i) sel = j; else if (sel === j) sel = i;
+      setDirty(); renderAll(); return;
+    }
+    if (go) { sel = +go.dataset.go; renderAll(); }
+  });
+  $("#contactItem").addEventListener("click", () => { sel = "contacto"; renderAll(); });
+  $("#addSection").addEventListener("click", () => {
+    const titulo = prompt("Nombre de la nueva sección (por ejemplo: Animación, Social media, Tipografía):");
+    if (!titulo) return;
+    let id = slug(titulo) || "seccion", n = 1;
+    while (data.secciones.some((s) => s.id === id) || ["inicio", "sobre-mi", "contacto"].includes(id)) id = `${slug(titulo)}-${++n}`;
+    const prev = data.secciones[data.secciones.length - 1];
+    data.secciones.push({ id, titulo, resumen: "", intro: "", tema: prev?.tema === "oscuro" ? "claro" : "oscuro", tipo: "galeria", piezas: [] });
+    sel = data.secciones.length - 1; setDirty(); renderAll();
+  });
+
+  /* ---------- sección seleccionada ---------- */
+  function renderMain() {
+    const main = $("#main");
+    if (sel === "contacto") {
+      const c = data.contacto ||= {};
+      main.innerHTML = `
+        <div class="head"><div><h2>Contacto</h2><p>Aparece al final del portafolio.</p></div></div>
+        <div class="panel"><div class="grid">
+          <label class="f">Correo<input type="text" data-c="email" value="${esc(c.email)}"></label>
+          <label class="f">WhatsApp<input type="text" data-c="whatsapp" value="${esc(c.whatsapp)}"><span class="hint">Escríbelo como quieras que se lea, por ejemplo 300 883 7021.</span></label>
+          <label class="f">Instagram (sin @)<input type="text" data-c="instagram" value="${esc(c.instagram)}"></label>
+        </div></div>`;
+      main.querySelectorAll("[data-c]").forEach((inp) => inp.addEventListener("input", () => { c[inp.dataset.c] = inp.value; setDirty(); }));
+      return;
+    }
+    const s = data.secciones[sel];
+    if (!s) { main.innerHTML = `<p>Crea una sección para empezar.</p>`; return; }
+    s.piezas ||= [];
+    main.innerHTML = `
+      <div class="head">
+        <div><h2>${esc(s.titulo || "Sin título")}</h2><p>Sección ${pad(sel + 1)} · ${esc(TIPOS[s.tipo]?.nombre || s.tipo)} · <a href="../#${esc(s.id)}" target="_blank" rel="noopener">verla en el portafolio ↗</a></p></div>
+        <button class="btn btn--danger" id="delSection">Eliminar sección</button>
+      </div>
+
+      <div class="panel">
+        <h3 class="script">Piezas</h3>
+        <p class="help">${esc(TIPOS[s.tipo]?.ayuda || "")} El orden de aquí es el orden en que se ven. Haz clic en una pieza para editarla.</p>
+        <div class="pieces" id="pieces">
+          ${s.piezas.map((p, i) => {
+            const first = p.video || (p.imagenes || [])[0];
+            const meta = [p.serie, s.tipo === "galeria" ? ESTILOS[p.estilo || "normal"]?.split(" (")[0] : "", p.video ? "Video" : "", (p.imagenes || []).length > 1 ? `${p.imagenes.length} imágenes` : ""].filter(Boolean).join(" · ");
+            return `<article class="pc">
+              <span class="pc__n">${pad(i + 1)}</span>
+              <div class="pc__thumb" data-edit="${i}">${first ? (isVideo(first) ? `<video src="${esc(src(first))}#t=1" muted preload="metadata"></video>` : `<img src="${esc(src(first))}" alt="" loading="lazy">`) : `<span class="empty">Sin imagen</span>`}</div>
+              <div class="pc__body"><strong>${esc(p.titulo || "Sin título")}</strong><small>${esc(meta)}</small></div>
+              <div class="pc__tools">
+                <button class="icon" data-pmove="${i}" data-dir="-1" aria-label="Mover antes" ${i === 0 ? "disabled" : ""}>←</button>
+                <button class="icon" data-pmove="${i}" data-dir="1" aria-label="Mover después" ${i === s.piezas.length - 1 ? "disabled" : ""}>→</button>
+                <button class="icon" data-edit="${i}" aria-label="Editar">✎</button>
+                <button class="icon icon--danger" data-pdel="${i}" aria-label="Eliminar pieza">🗑</button>
+              </div>
+            </article>`;
+          }).join("")}
+          <button class="add" id="addPiece"><b>+</b>Agregar pieza</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3 class="script">Datos de la sección</h3>
+        <div class="grid">
+          <label class="f">Título<input type="text" data-s="titulo" value="${esc(s.titulo)}"></label>
+          <label class="f">Frase corta (tarjeta del índice)<input type="text" data-s="resumen" value="${esc(s.resumen)}"></label>
+          <label class="f full">Introducción<textarea data-s="intro">${esc(s.intro)}</textarea></label>
+          <label class="f">Fondo
+            <select data-s="tema"><option value="oscuro" ${s.tema === "oscuro" ? "selected" : ""}>Oscuro (vino)</option><option value="claro" ${s.tema !== "oscuro" ? "selected" : ""}>Claro (papel)</option></select>
+          </label>
+          <label class="f">Diseño de la sección
+            <select data-s="tipo">${Object.entries(TIPOS).map(([k, t]) => `<option value="${k}" ${s.tipo === k ? "selected" : ""}>${t.nombre}</option>`).join("")}</select>
+          </label>
+          ${s.tipo === "ropa" ? `<label class="f full">Lema grande<input type="text" data-s="lema" value="${esc(s.lema)}"></label>` : ""}
+        </div>
+      </div>
+
+      ${s.tipo === "branding" ? `
+      <div class="panel">
+        <h3 class="script">Logofolio</h3>
+        <p class="help">Sube los logos en blanco con fondo transparente (PNG) para que se vean bien sobre el fondo oscuro.</p>
+        <div class="logos">${(s.logos ||= []).map((l, i) => `
+          <div class="logo-row">
+            <div class="thumb"><img src="${esc(src(l.imagen))}" alt=""></div>
+            <input type="text" data-logo="${i}" value="${esc(l.nombre)}" aria-label="Nombre del logo">
+            <button class="icon" data-lmove="${i}" data-dir="-1" ${i === 0 ? "disabled" : ""} aria-label="Subir">↑</button>
+            <button class="icon" data-lmove="${i}" data-dir="1" ${i === s.logos.length - 1 ? "disabled" : ""} aria-label="Bajar">↓</button>
+            <button class="icon" data-lrep="${i}" aria-label="Cambiar imagen">⟳</button>
+            <button class="icon icon--danger" data-ldel="${i}" aria-label="Eliminar logo">🗑</button>
+          </div>`).join("")}
+        </div>
+        <p><button class="btn btn--ghost" id="addLogo">+ Agregar logos</button></p>
+        <div class="progressbar" id="logoBar"><i></i></div>
+      </div>` : ""}
+    `;
+
+    main.querySelectorAll("[data-s]").forEach((el) => el.addEventListener(el.tagName === "SELECT" ? "change" : "input", () => {
+      s[el.dataset.s] = el.value; setDirty();
+      if (el.tagName === "SELECT") renderAll(); else renderNav();
+    }));
+    $("#delSection").addEventListener("click", () => {
+      if (!confirm(`¿Eliminar la sección «${s.titulo}» y sus ${s.piezas.length} piezas del portafolio?\n\nLos archivos no se borran de la carpeta, y hasta que guardes puedes recargar para deshacer.`)) return;
+      data.secciones.splice(sel, 1); sel = Math.max(0, sel - 1); setDirty(); renderAll();
+    });
+    $("#addPiece").addEventListener("click", () => editPiece(s, null));
+    $("#pieces").addEventListener("click", (e) => {
+      const ed = e.target.closest("[data-edit]"), mv = e.target.closest("[data-pmove]"), del = e.target.closest("[data-pdel]");
+      if (mv) { const i = +mv.dataset.pmove, j = i + +mv.dataset.dir; [s.piezas[i], s.piezas[j]] = [s.piezas[j], s.piezas[i]]; setDirty(); renderAll(); }
+      else if (del) { const i = +del.dataset.pdel; if (confirm(`¿Quitar «${s.piezas[i].titulo || "esta pieza"}» del portafolio?`)) { s.piezas.splice(i, 1); setDirty(); renderAll(); } }
+      else if (ed) editPiece(s, +ed.dataset.edit);
+    });
+
+    if (s.tipo === "branding") {
+      main.querySelectorAll("[data-logo]").forEach((inp) => inp.addEventListener("input", () => { s.logos[+inp.dataset.logo].nombre = inp.value; setDirty(); }));
+      main.querySelector(".logos").addEventListener("click", async (e) => {
+        const mv = e.target.closest("[data-lmove]"), del = e.target.closest("[data-ldel]"), rp = e.target.closest("[data-lrep]");
+        if (mv) { const i = +mv.dataset.lmove, j = i + +mv.dataset.dir; [s.logos[i], s.logos[j]] = [s.logos[j], s.logos[i]]; setDirty(); renderMain(); }
+        if (del) { s.logos.splice(+del.dataset.ldel, 1); setDirty(); renderMain(); }
+        if (rp) { const [f] = await pick({ multiple: false }); if (!f) return; const [p] = await uploadMany([f], $("#logoBar")); if (p) { s.logos[+rp.dataset.lrep].imagen = p; setDirty(); renderMain(); } }
+      });
+      $("#addLogo").addEventListener("click", async () => {
+        const files = await pick(); if (!files.length) return;
+        const bar = $("#logoBar"); bar.classList.add("is-on");
+        const paths = await uploadMany(files, bar);
+        paths.forEach((p, k) => s.logos.push({ nombre: files[k].name.replace(/\.[^.]+$/, ""), imagen: p }));
+        setDirty(); renderMain();
+      });
+    }
+  }
+
+  /* ---------- editor de pieza ---------- */
+  function editPiece(sec, index) {
+    const isNew = index === null;
+    const p = JSON.parse(JSON.stringify(isNew ? { titulo: "", descripcion: "", imagenes: [] } : sec.piezas[index]));
+    p.imagenes ||= [];
+    const t = sec.tipo;
+    const series = [...new Set(sec.piezas.map((x) => x.serie).filter(Boolean))];
+    const dlg = $("#dlg"), body = $("#dlgBody");
+    $("#dlgTitle").textContent = isNew ? "Nueva pieza" : (p.titulo || "Pieza");
+
+    const draw = () => {
+      body.innerHTML = `
+        <div class="grid">
+          <label class="f full">Título<input type="text" name="titulo" value="${esc(p.titulo)}" required></label>
+          <label class="f full">Descripción<textarea name="descripcion">${esc(p.descripcion)}</textarea></label>
+          ${["empaques", "audiovisual"].includes(t) ? `<label class="f full">${t === "audiovisual" ? "Subtítulo (ej. Producción · entrevista)" : "Etiqueta (ej. Colaborativo · Ilustración)"}<input type="text" name="etiqueta" value="${esc(p.etiqueta)}"></label>` : ""}
+          ${t === "galeria" ? `<label class="f full">Cómo se muestra<select name="estilo">${Object.entries(ESTILOS).map(([k, v]) => `<option value="${k}" ${(p.estilo || "normal") === k ? "selected" : ""}>${v}</option>`).join("")}</select>
+            <span class="hint">Los recuadros y el borde de pantalla funcionan mejor con PNG sin fondo. Si la ilustración viene cortada, el recuadro hace que el corte quede en el borde.</span></label>` : ""}
+          ${t === "fotos" ? `
+            <label class="f">Serie (filtro)<input type="text" name="serie" list="seriesList" value="${esc(p.serie)}"><datalist id="seriesList">${series.map((x) => `<option value="${esc(x)}">`).join("")}</datalist></label>
+            <label class="f">Tipo<select name="estilo"><option value="normal">Foto</option><option value="comparar" ${p.estilo === "comparar" ? "selected" : ""}>Comparar dos versiones</option></select></label>
+            ${p.estilo === "comparar" ? `<label class="f">Nombre versión 1<input type="text" name="etiqueta1" value="${esc(p.etiqueta1 || "Versión 1")}"></label><label class="f">Nombre versión 2<input type="text" name="etiqueta2" value="${esc(p.etiqueta2 || "Versión 2")}"></label>` : ""}` : ""}
+        </div>
+
+        ${t === "audiovisual" ? `
+          <h4>Video</h4>
+          <div class="media-list">
+            ${p.video ? `<div class="mi"><video src="${esc(src(p.video))}#t=1" muted preload="metadata"></video><div class="mi__tools"><span></span><button type="button" class="icon icon--danger" data-rmvideo aria-label="Quitar video">🗑</button></div></div>` : ""}
+            <button type="button" class="drop" data-upvideo>${p.video ? "Cambiar video" : "+ Subir video<br><small>MP4 o WEBM</small>"}</button>
+          </div>
+          <p class="hint" style="font-size:12px;color:var(--muted)">Si no subes video, la pieza se muestra como fotograma con su imagen.</p>` : ""}
+
+        <h4>${t === "fotos" && p.estilo === "comparar" ? "Las dos versiones" : t === "audiovisual" ? "Imagen (fotograma)" : "Imágenes"}</h4>
+        <div class="media-list" id="mediaList">
+          ${p.imagenes.map((im, i) => `
+            <div class="mi">${i === 0 ? `<span class="mi__badge">Principal</span>` : ""}<img src="${esc(src(im))}" alt="">
+              <div class="mi__tools">
+                <span><button type="button" class="icon" data-imove="${i}" data-dir="-1" ${i === 0 ? "disabled" : ""} aria-label="Mover antes">←</button>
+                <button type="button" class="icon" data-imove="${i}" data-dir="1" ${i === p.imagenes.length - 1 ? "disabled" : ""} aria-label="Mover después">→</button></span>
+                <button type="button" class="icon icon--danger" data-idel="${i}" aria-label="Quitar imagen">🗑</button>
+              </div></div>`).join("")}
+          <button type="button" class="drop" id="dropZone">+ Subir imágenes<br><small>o arrástralas aquí</small></button>
+        </div>
+        <div class="progressbar" id="upBar"><i></i></div>
+        <p class="hint" style="font-size:12px;color:var(--muted)">${hintFor(t, p)}</p>
+
+        ${t === "branding" ? `
+          <h4>Versión «antes»</h4>
+          <div class="media-list">
+            ${p.antes ? `<div class="mi"><img src="${esc(src(p.antes))}" alt=""><div class="mi__tools"><span></span><button type="button" class="icon icon--danger" data-rmantes aria-label="Quitar">🗑</button></div></div>` : ""}
+            <button type="button" class="drop" data-upantes>${p.antes ? "Cambiar" : "+ Subir logo anterior"}</button>
+          </div>` : ""}
+      `;
+    };
+    const hintFor = (t, p) => ({
+      galeria: "Se usa la imagen principal. Las demás quedan guardadas por si quieres cambiarla.",
+      cuadricula: "Se usa la imagen principal. Funciona mejor con piezas verticales.",
+      empaques: "De 1 a 3 imágenes: la última se muestra más grande.",
+      fotos: p.estilo === "comparar" ? "Sube 2 fotos: la 1 queda a la izquierda del deslizador y la 2 a la derecha." : "Se usa la imagen principal.",
+      branding: "1 imagen se ve a todo lo ancho; 2 o 3 se ven en fila.",
+      audiovisual: "Opcional. Si la pieza tiene video, esta imagen no se muestra.",
+      ropa: "Se usa la imagen principal, recortada en forma de arco.",
+    }[t] || "");
+
+    const sync = () => {
+      body.querySelectorAll("[name]").forEach((el) => { if (el.value || p[el.name] !== undefined) p[el.name] = el.value; });
+    };
+    async function addImages(files) {
+      files = files.filter((f) => /^image\//.test(f.type) || /\.(jpe?g|png|webp|gif|avif)$/i.test(f.name));
+      if (!files.length) return;
+      sync();
+      const bar = $("#upBar"); bar.classList.add("is-on");
+      p.imagenes.push(...(await uploadMany(files, bar)));
+      draw();
+    }
+
+    body.onclick = async (e) => {
+      const mv = e.target.closest("[data-imove]"), del = e.target.closest("[data-idel]");
+      if (mv) { sync(); const i = +mv.dataset.imove, j = i + +mv.dataset.dir; [p.imagenes[i], p.imagenes[j]] = [p.imagenes[j], p.imagenes[i]]; draw(); }
+      else if (del) { sync(); p.imagenes.splice(+del.dataset.idel, 1); draw(); }
+      else if (e.target.closest("#dropZone")) addImages(await pick());
+      else if (e.target.closest("[data-upvideo]")) {
+        const [f] = await pick({ accept: "video/*", multiple: false }); if (!f) return;
+        sync(); const bar = $("#upBar"); bar.classList.add("is-on");
+        const [path] = await uploadMany([f], bar); if (path) p.video = path; draw();
+      }
+      else if (e.target.closest("[data-rmvideo]")) { sync(); delete p.video; draw(); }
+      else if (e.target.closest("[data-upantes]")) {
+        const [f] = await pick({ multiple: false }); if (!f) return;
+        sync(); const [path] = await uploadMany([f], $("#upBar")); if (path) p.antes = path; draw();
+      }
+      else if (e.target.closest("[data-rmantes]")) { sync(); delete p.antes; draw(); }
+    };
+    body.onchange = (e) => { if (e.target.name === "estilo") { sync(); draw(); } };
+    body.ondragover = (e) => { e.preventDefault(); $("#dropZone")?.classList.add("is-over"); };
+    body.ondragleave = () => $("#dropZone")?.classList.remove("is-over");
+    body.ondrop = (e) => { e.preventDefault(); $("#dropZone")?.classList.remove("is-over"); addImages([...e.dataTransfer.files]); };
+
+    draw();
+    dlg.returnValue = "";
+    dlg.showModal();
+    dlg.onclose = () => {
+      if (dlg.returnValue !== "ok") return;
+      sync();
+      Object.keys(p).forEach((k) => { if (p[k] === "" && k !== "titulo") delete p[k]; });
+      if (p.estilo === "normal") delete p.estilo;
+      if (p.estilo !== "comparar") { delete p.etiqueta1; delete p.etiqueta2; }
+      if (isNew) sec.piezas.push(p); else sec.piezas[index] = p;
+      setDirty(); renderAll();
+      toast(isNew ? "Pieza agregada. Recuerda guardar." : "Pieza actualizada. Recuerda guardar.");
+    };
+  }
+  $("#dlgForm").addEventListener("submit", (e) => {
+    if (e.submitter?.value === "ok" && !$("#dlgBody [name=titulo]").value.trim()) { e.preventDefault(); $("#dlgBody [name=titulo]").focus(); toast("Ponle un título a la pieza.", true); }
+  });
+
+  function renderAll() { renderNav(); renderMain(); }
+
+  fetch("/api/content", { cache: "no-store" })
+    .then((r) => r.ok ? r.json() : r.json().then((j) => Promise.reject(new Error(j.error || r.status))))
+    .then((d) => { data = d; data.secciones ||= []; setDirty(false); renderAll(); })
+    .catch((e) => {
+      status.textContent = "Sin conexión";
+      $("#main").innerHTML = `<div class="panel"><h3 class="script">No se pudo abrir el panel</h3><p>${esc(e.message)}</p><p>El panel funciona cuando abres el portafolio en tu computador con <code>node server.mjs site</code> y entras a <code>http://localhost:5173/admin/</code>.</p></div>`;
+    });
+})();
+</script>
+</body>
+</html>

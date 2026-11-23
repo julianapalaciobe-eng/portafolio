@@ -1,0 +1,38 @@
+# Publica la carpeta site/ en GitHub Pages cada vez que se sube un cambio a main.
+name: Publicar portafolio
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # El panel /admin y las copias de seguridad solo sirven en el computador, no se publican.
+      - name: Preparar archivos
+        run: |
+          cp -r site _site
+          rm -rf _site/admin _site/data/backups
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

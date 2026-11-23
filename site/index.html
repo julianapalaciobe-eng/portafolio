@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ink District · Portafolio</title>
+<meta name="description" content="Portafolio de diseño gráfico de Juliana Palacio — Ink District: ilustración, empaques, editorial, fotografía, branding, audiovisual y moda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:ital,wght@0,400;0,500;0,700;1,400&family=Oswald:wght@500;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ BARRA SUPERIOR ============ -->
+<header class="topbar" id="topbar">
+  <a href="#inicio" class="topbar__logo" aria-label="Ink District, volver al inicio"><span class="logo-mask"></span></a>
+  <nav class="topbar__nav" aria-label="Secciones">
+    <a href="#sobre-mi">Sobre mí</a>
+  </nav>
+  <a href="#contacto" class="btn btn--small">Contacto</a>
+  <button class="topbar__menu" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+  <div class="progress" aria-hidden="true"><i></i></div>
+</header>
+
+<main>
+
+<!-- ============ PORTADA ============ -->
+<section class="hero" id="inicio">
+  <div class="hero__texture" aria-hidden="true"></div>
+  <img class="hero__star" src="assets/img/star.png" alt="" aria-hidden="true">
+  <img class="hero__star hero__star--small" src="assets/img/star.png" alt="" aria-hidden="true">
+  <span class="hero__brand logo-mask" aria-hidden="true"></span>
+
+  <h1 class="hero__title" aria-label="Portafolio">
+    <span class="hero__line">PORTA</span>
+    <span class="hero__line">FOLIO</span>
+  </h1>
+  <p class="hero__pill script">Diseño gráfico</p>
+  <p class="hero__by">Juliana Palacio · <strong>Ink District</strong></p>
+  <p class="hero__tag hero__tag--a" data-type>Ilustración / Empaques</p>
+  <p class="hero__tag hero__tag--b" data-type>Fotografía / Audiovisual</p>
+  <p class="hero__tag hero__tag--c" data-type>Branding / Editorial</p>
+  <p class="hero__year" data-type>2026 //</p>
+
+  <img class="hero__avatar" src="assets/img/avatar.png" alt="Ilustración de Juliana, avatar de la marca Ink District">
+
+  <nav class="hero__index" aria-label="Índice del portafolio"></nav>
+  <a href="#sobre-mi" class="hero__scroll">Desliza <span aria-hidden="true">↓</span></a>
+</section>
+
+<!-- ============ SOBRE MÍ ============ -->
+<section class="about paper" id="sobre-mi">
+  <div class="about__photo reveal">
+    <div class="about__frame"><img src="assets/img/juliana.png" alt="Juliana Palacio sonriendo, con gorra y camiseta negra"></div>
+    <ul class="tools" aria-label="Programas que manejo">
+      <li title="Photoshop">Ps</li><li title="Illustrator">Ai</li><li title="Lightroom">Lr</li><li title="Premiere">Pr</li><li title="InDesign">Id</li>
+    </ul>
+  </div>
+  <div class="about__text reveal">
+    <p class="hello" data-type>¡Hola! Soy Juliana Palacio</p>
+    <h2 class="script about__h">Acerca de mí</h2>
+    <p class="about__lead">Soy una <em>diseñadora</em> proactiva, curiosa y empática que busca ir más allá de la primera idea. Con enfoque en <em>ilustración, empaques, campañas y proyectos audiovisuales</em>, combino estrategia y creatividad para construir experiencias memorables y <em>conectar de forma real con el usuario</em>.</p>
+    <p>Me destaco por mi liderazgo colaborativo y visión estratégica. Además, canalizo mi creatividad en la gastronomía como creadora de <strong>Borde</strong>, un proyecto de repostería.</p>
+
+    <div class="about__cols">
+      <div>
+        <h3 class="script">Educación</h3>
+        <ul class="list">
+          <li><b>Universidad Católica Luis Amigó</b> Profesional en Diseño Gráfico <span>En curso</span></li>
+          <li><b>Universidad EAN</b> Diplomado en e-commerce <span>2026</span></li>
+          <li><b>Liceo Francisco Restrepo Molina</b> Bachiller <span>2021</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="script">Experiencia</h3>
+        <ul class="list">
+          <li><b>Freelancer de Diseño Gráfico</b> Creadora de Borde · Libro para la Asociación María Santificadora · Logo para asesor de Sura · Marca de cosmético capilar · Social media</li>
+          <li><b>Repostera</b></li>
+          <li><b>Servicio al cliente</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip chip--solid">Español nativo</span><span class="chip chip--solid">Inglés básico</span>
+      <span class="chip">Diseño</span><span class="chip">Audiovisuales</span><span class="chip">Cocina</span><span class="chip">Música</span><span class="chip">Animales</span><span class="chip">Cine</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ CONTENIDO ============ -->
+<section class="contents dark" aria-labelledby="contenido-h">
+  <header class="contents__head reveal">
+    <h2 id="contenido-h" class="contents__h">Contenido</h2>
+    <span class="contents__year">2021 — 2026 //</span>
+  </header>
+  <ol class="cards" id="cards"></ol>
+</section>
+
+<!-- Los capítulos se arman desde data/content.json (edítalos en /admin) -->
+<div id="capitulos"></div>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contact dark" id="contacto">
+  <img class="contact__star" src="assets/img/star.png" alt="" aria-hidden="true">
+  <p class="contact__q reveal">¿Tienes un proyecto en mente?</p>
+  <h2 class="script contact__h reveal">Creemos algo juntos</h2>
+  <ul class="contact__list reveal" id="contactList"></ul>
+  <footer class="footer"><span class="logo-mask"></span><span>Juliana Palacio · Diseño gráfico · 2026</span><a href="#inicio">Volver arriba ↑</a></footer>
+</section>
+
+</main>
+
+<!-- ============ VISOR ============ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de piezas" hidden>
+  <button class="lb__close" aria-label="Cerrar">×</button>
+  <button class="lb__nav lb__prev" aria-label="Pieza anterior">‹</button>
+  <figure class="lb__fig">
+    <img class="lb__img" alt="">
+    <figcaption>
+      <span class="lb__count"></span>
+      <h3 class="script lb__title"></h3>
+      <p class="lb__desc"></p>
+    </figcaption>
+  </figure>
+  <button class="lb__nav lb__next" aria-label="Pieza siguiente">›</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# configuración local
+.claude/
+node_modules/
+*.tmp
+
+# copias de seguridad del panel (se quedan en tu computador)
+site/data/backups/
+
+# sistema
+Thumbs.db
+.DS_Store
+desktop.ini

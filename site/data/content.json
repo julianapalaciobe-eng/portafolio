@@ -1,0 +1,522 @@
+{
+  "contacto": {
+    "email": "inkdistrict18@gmail.com",
+    "whatsapp": "300 883 7021",
+    "instagram": "ink__district"
+  },
+  "secciones": [
+    {
+      "id": "ilustracion",
+      "titulo": "Ilustración",
+      "resumen": "Mitos, carnaval y personajes",
+      "intro": "Mitos, carnaval y personajes. Ilustración digital para revistas, empaques y libros: leyendas colombianas con alto contraste, volumen y color.",
+      "tema": "oscuro",
+      "tipo": "galeria",
+      "piezas": [
+        {
+          "titulo": "La bola de fuego",
+          "descripcion": "Mitos colombianos. Proyecto académico de diseño e ilustración digital para la edición de una revista cultural.",
+          "estilo": "recuadro",
+          "imagenes": [
+            "assets/img/ilus-bola-de-fuego.png"
+          ]
+        },
+        {
+          "titulo": "El Mohán",
+          "descripcion": "Ilustración para revista de mitos. Concepto visual enfocado en dar vida a leyendas folclóricas tradicionales.",
+          "estilo": "lateral",
+          "imagenes": [
+            "assets/img/ilus-mohan.png"
+          ]
+        },
+        {
+          "titulo": "Carnaval de N y B",
+          "descripcion": "Diseño de personaje e ilustración de alto contraste para revista, destacando la energía y el volumen de la máscara carnavalesca.",
+          "estilo": "recuadro-claro",
+          "imagenes": [
+            "assets/img/ilus-carnaval.png"
+          ]
+        },
+        {
+          "titulo": "Los ancestros",
+          "descripcion": "Proyecto colaborativo, ilustración para empaques. Explora la diversidad estética con simbología oriental tradicional.",
+          "estilo": "normal",
+          "imagenes": [
+            "assets/img/ilus-ancestros.jpg"
+          ]
+        },
+        {
+          "titulo": "Las brujas",
+          "descripcion": "Proyecto académico. Ilustración para revista de mitos.",
+          "estilo": "recuadro-carmesi",
+          "imagenes": [
+            "assets/img/ilus-brujas.png"
+          ]
+        },
+        {
+          "titulo": "¿Quién es kkk?",
+          "descripcion": "Proyecto académico. Ilustración para un libro de Sherlock Holmes.",
+          "estilo": "normal",
+          "imagenes": [
+            "assets/img/ilus-kkk.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "empaques",
+      "titulo": "Empaques",
+      "resumen": "Ingeniería de papel e ilustración",
+      "intro": "Ingeniería de papel, ilustración y diagramación: empaques que se abren como una historia.",
+      "tema": "claro",
+      "tipo": "empaques",
+      "piezas": [
+        {
+          "titulo": "Mushu",
+          "etiqueta": "Colaborativo · Ilustración",
+          "descripcion": "La propuesta combina ingeniería de papel con ilustraciones personalizadas: un empaque hexagonal de pisos giratorios inspirado en la estética oriental.",
+          "imagenes": [
+            "assets/img/emp-mushu-1.png",
+            "assets/img/emp-mushu-2.png"
+          ]
+        },
+        {
+          "titulo": "Weed Collection",
+          "etiqueta": "Colaborativo · Ilustración y diagramación",
+          "descripcion": "Empaque inspirado en la temática del 420: ilustración y diagramación de una línea en tonos verdes.",
+          "imagenes": [
+            "assets/img/emp-weed.png",
+            "assets/img/emp-weed-label.png"
+          ]
+        },
+        {
+          "titulo": "Kit máscara",
+          "etiqueta": "Académico",
+          "descripcion": "Kit para el Carnaval de Negros y Blancos que trae una máscara, pinturas y pinceles, para que seas un artista. Pinta, crea, vive la fiesta.",
+          "imagenes": [
+            "assets/img/emp-kit.png"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "editorial",
+      "titulo": "Editorial",
+      "resumen": "Revistas, libros e infografía",
+      "intro": "Revistas, libros e infografías: ilustración, diagramación y estilo gráfico de principio a fin.",
+      "tema": "oscuro",
+      "tipo": "galeria",
+      "piezas": [
+        {
+          "titulo": "Güiro",
+          "descripcion": "Proyecto colaborativo. Participación: ilustración, diagramación y estilo gráfico.",
+          "estilo": "recorte",
+          "imagenes": [
+            "assets/img/ed-guiro.png"
+          ]
+        },
+        {
+          "titulo": "Revista de mitos",
+          "descripcion": "Proyecto colaborativo. Participación: ilustración, diagramación y estilo gráfico.",
+          "estilo": "recorte",
+          "imagenes": [
+            "assets/img/ed-mitos.png"
+          ]
+        },
+        {
+          "titulo": "Carnaval de negros y blancos",
+          "descripcion": "Portada de la revista dedicada al carnaval de Pasto.",
+          "estilo": "recorte",
+          "imagenes": [
+            "assets/img/ed-carnaval-1.png"
+          ]
+        },
+        {
+          "titulo": "Carnaval · interiores",
+          "descripcion": "“La fiesta donde la piel no tiene color” y “La magia de la tierra y el color”.",
+          "estilo": "recorte",
+          "imagenes": [
+            "assets/img/ed-carnaval-2.png"
+          ]
+        },
+        {
+          "titulo": "María Santificadora",
+          "descripcion": "Proyecto profesional: ilustración, diagramación y estilo gráfico del libro.",
+          "estilo": "recorte",
+          "imagenes": [
+            "assets/img/ed-maria.png"
+          ]
+        },
+        {
+          "titulo": "Chocolate",
+          "descripcion": "Proyecto académico: infografía con datos importantes del chocolate.",
+          "estilo": "normal",
+          "imagenes": [
+            "assets/img/ed-chocolate.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fotografia",
+      "titulo": "Fotografía",
+      "resumen": "Retrato urbano, calle y noche",
+      "intro": "Retrato urbano, calle y noche. Dirección, luz y color: cada foto es una pieza.",
+      "tema": "claro",
+      "tipo": "fotos",
+      "piezas": [
+        {
+          "titulo": "Etalonaje",
+          "descripcion": "Desliza para comparar dos tratamientos de color de la misma toma.",
+          "estilo": "comparar",
+          "etiqueta1": "Fría",
+          "etiqueta2": "Cálida",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-1b.jpg",
+            "assets/img/sesion-1a.jpg"
+          ]
+        },
+        {
+          "titulo": "Noche",
+          "descripcion": "Flash directo y sombras profundas, en dos lecturas de color.",
+          "estilo": "comparar",
+          "etiqueta1": "Fría",
+          "etiqueta2": "Cálida",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-2b.jpg",
+            "assets/img/sesion-2a.jpg"
+          ]
+        },
+        {
+          "titulo": "Sesión urbana I",
+          "descripcion": "Retrato a contraluz frente a columna de concreto.",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-1a.jpg"
+          ]
+        },
+        {
+          "titulo": "Sesión urbana II",
+          "descripcion": "Luz cálida de ciudad sobre la textura del muro.",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-3.jpg"
+          ]
+        },
+        {
+          "titulo": "Sesión urbana III",
+          "descripcion": "Composición en dos planos, flash nocturno.",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-2a.jpg"
+          ]
+        },
+        {
+          "titulo": "Sesión urbana IV",
+          "descripcion": "Estudio con gradiente rojo-naranja.",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-5.webp"
+          ]
+        },
+        {
+          "titulo": "Sesión urbana V",
+          "descripcion": "Low key: el verde como único punto de color.",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-4.jpg"
+          ]
+        },
+        {
+          "titulo": "Sesión urbana VI",
+          "descripcion": "Fotomanipulación en blanco y negro con glitch.",
+          "serie": "Sesión urbana",
+          "imagenes": [
+            "assets/img/sesion-6.webp"
+          ]
+        },
+        {
+          "titulo": "La 4 Sur I",
+          "descripcion": "BMX en el parque de La 4 Sur.",
+          "serie": "La 4 Sur",
+          "imagenes": [
+            "assets/img/foto-4sur-1.jpg"
+          ]
+        },
+        {
+          "titulo": "La 4 Sur II",
+          "descripcion": "Movimiento congelado.",
+          "serie": "La 4 Sur",
+          "imagenes": [
+            "assets/img/foto-4sur-2.jpg"
+          ]
+        },
+        {
+          "titulo": "La 4 Sur III",
+          "descripcion": "Ride or die.",
+          "serie": "La 4 Sur",
+          "imagenes": [
+            "assets/img/foto-4sur-3.jpg"
+          ]
+        },
+        {
+          "titulo": "Retratos urbanos I",
+          "descripcion": "Retrato en exteriores.",
+          "serie": "Retratos urbanos",
+          "imagenes": [
+            "assets/img/foto-retrato-1.jpg"
+          ]
+        },
+        {
+          "titulo": "Retratos urbanos II",
+          "descripcion": "Pose y estructura.",
+          "serie": "Retratos urbanos",
+          "imagenes": [
+            "assets/img/foto-retrato-2.jpg"
+          ]
+        },
+        {
+          "titulo": "Retratos urbanos III",
+          "descripcion": "Cercanía y complicidad.",
+          "serie": "Retratos urbanos",
+          "imagenes": [
+            "assets/img/foto-retrato-3.jpg"
+          ]
+        },
+        {
+          "titulo": "Animales I",
+          "descripcion": "Proyecto personal · Encuentro con el creativo.",
+          "serie": "Encuentro con el creativo",
+          "imagenes": [
+            "assets/img/foto-animal-1.jpg"
+          ]
+        },
+        {
+          "titulo": "Animales II",
+          "descripcion": "Proyecto personal · Encuentro con el creativo.",
+          "serie": "Encuentro con el creativo",
+          "imagenes": [
+            "assets/img/foto-animal-2.jpg"
+          ]
+        },
+        {
+          "titulo": "BMX · La 4 Sur",
+          "descripcion": "Fotografía intervenida para afiche.",
+          "serie": "Edición",
+          "imagenes": [
+            "assets/img/poster-bmx.jpg"
+          ]
+        },
+        {
+          "titulo": "Ride or die",
+          "descripcion": "Afiche con fotografía de La 4 Sur.",
+          "serie": "Edición",
+          "imagenes": [
+            "assets/img/poster-ride.jpg"
+          ]
+        },
+        {
+          "titulo": "Urban",
+          "descripcion": "Retrato editado para afiche.",
+          "serie": "Edición",
+          "imagenes": [
+            "assets/img/poster-urban.jpg"
+          ]
+        },
+        {
+          "titulo": "Día mundial de las abejas",
+          "descripcion": "Pieza informativa con fotografía macro.",
+          "serie": "Edición",
+          "imagenes": [
+            "assets/img/poster-abejas.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "branding",
+      "titulo": "Branding",
+      "resumen": "Logofolio y rebranding",
+      "intro": "Identidades que nacen desde cero y marcas que se transforman. Logofolio y rebranding.",
+      "tema": "oscuro",
+      "tipo": "branding",
+      "logos": [
+        {
+          "nombre": "Borde",
+          "imagen": "assets/img/logo-borde.png"
+        },
+        {
+          "nombre": "Café Buendía",
+          "imagen": "assets/img/logo-buendia.png"
+        },
+        {
+          "nombre": "Nomad Kin",
+          "imagen": "assets/img/logo-nomadkin.png"
+        },
+        {
+          "nombre": "+57",
+          "imagen": "assets/img/logo-57.png"
+        },
+        {
+          "nombre": "Albar",
+          "imagen": "assets/img/logo-albar.png"
+        },
+        {
+          "nombre": "Güiro",
+          "imagen": "assets/img/logo-guiro.png"
+        },
+        {
+          "nombre": "Toastatas",
+          "imagen": "assets/img/logo-toastatas.png"
+        },
+        {
+          "nombre": "Ink District",
+          "imagen": "assets/img/logo-inkdistrict.png"
+        }
+      ],
+      "piezas": [
+        {
+          "titulo": "Crachos",
+          "descripcion": "Tortillas de harina · sabores mexicanos. Tipografía Akira Expanded, Agency FB y Edwardian Script.",
+          "antes": "assets/img/crachos-antes.jpg",
+          "imagenes": [
+            "assets/img/crachos.jpg"
+          ]
+        },
+        {
+          "titulo": "Café Buendía",
+          "descripcion": "Crema de Whisky · nuevo sabor. Tipografía Arsenica Trial, High Tower Text y Helvetica Rounded.",
+          "antes": "assets/img/buendia-antes.jpg",
+          "imagenes": [
+            "assets/img/buendia-1.jpg",
+            "assets/img/buendia-2.jpg",
+            "assets/img/buendia-3.jpg"
+          ]
+        },
+        {
+          "titulo": "Toastatas",
+          "descripcion": "Papas a la francesa con personaje propio y un sello “Exceso en ricura”.",
+          "antes": "assets/img/toastatas-antes.jpg",
+          "imagenes": [
+            "assets/img/toastatas-1.jpg",
+            "assets/img/toastatas-2.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "audiovisual",
+      "titulo": "Audiovisual",
+      "resumen": "De la preproducción a la postproducción",
+      "intro": "Preproducción, producción y postproducción. Me especializo en la conceptualización creativa, definiendo el rumbo estético y narrativo de cada propuesta.",
+      "tema": "claro",
+      "tipo": "audiovisual",
+      "piezas": [
+        {
+          "titulo": "Secuencia 01",
+          "etiqueta": "Conceptualización · edición",
+          "video": "assets/video/secuencia.mp4",
+          "imagenes": []
+        },
+        {
+          "titulo": "Testimonio",
+          "etiqueta": "Producción · entrevista",
+          "video": "assets/video/testimonio.mp4",
+          "imagenes": []
+        },
+        {
+          "titulo": "Clip",
+          "etiqueta": "Formato corto",
+          "video": "assets/video/clip.mp4",
+          "imagenes": []
+        },
+        {
+          "titulo": "¿Quién soy?",
+          "descripcion": "Participación: conceptualización, preproducción y postproducción.",
+          "imagenes": [
+            "assets/img/av-dynamo-1.jpg"
+          ]
+        },
+        {
+          "titulo": "Dynamo",
+          "descripcion": "Participación: conceptualización y producción.",
+          "imagenes": [
+            "assets/img/av-dynamo-3.jpg"
+          ]
+        },
+        {
+          "titulo": "Dynamo · locación",
+          "descripcion": "Participación: conceptualización y producción.",
+          "imagenes": [
+            "assets/img/av-dynamo-2.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ropa",
+      "titulo": "Ropa",
+      "resumen": "RASTRO · Haz ruido sin hablar",
+      "intro": "Me apasiona la moda. Creo en la ropa no solo como estética, sino como un refugio acogedor donde la autenticidad y la comodidad se encuentran. De esa visión compartida con mis amigos nació RASTRO.",
+      "tema": "oscuro",
+      "tipo": "ropa",
+      "lema": "Haz ruido sin hablar",
+      "piezas": [
+        {
+          "titulo": "RASTRO · Jean",
+          "descripcion": "Prendas de mi autoría con estética urbana.",
+          "imagenes": [
+            "assets/img/rastro-1.jpg"
+          ]
+        },
+        {
+          "titulo": "RASTRO · Look",
+          "descripcion": "Haz ruido sin hablar.",
+          "imagenes": [
+            "assets/img/rastro-2.jpg"
+          ]
+        },
+        {
+          "titulo": "RASTRO · Top",
+          "descripcion": "Estética urbana convertida en experiencia cómoda, con actitud y carácter propio.",
+          "imagenes": [
+            "assets/img/rastro-3.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "extras",
+      "titulo": "Extras",
+      "resumen": "Afiches y piezas para redes",
+      "intro": "Afiches, homenajes y piezas para redes.",
+      "tema": "claro",
+      "tipo": "cuadricula",
+      "piezas": [
+        {
+          "titulo": "Nanpa Básico",
+          "descripcion": "Afiche homenaje.",
+          "imagenes": [
+            "assets/img/extra-nanpa.jpg"
+          ]
+        },
+        {
+          "titulo": "Hacienda Nápoles",
+          "descripcion": "Pieza para redes: “La aventura continúa”.",
+          "imagenes": [
+            "assets/img/extra-napoles.jpg"
+          ]
+        },
+        {
+          "titulo": "Tupac 2000",
+          "descripcion": "Afiche tipográfico.",
+          "imagenes": [
+            "assets/img/extra-tupac.jpg"
+          ]
+        }
+      ]
+    }
+  ]
+}
